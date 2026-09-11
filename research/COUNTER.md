@@ -23,4 +23,3 @@ Two Puddle Post browser pages displayed the shared preview total changing from 1
 Run `npm run build`, then `npx netlify-cli deploy --prod --dir dist --functions netlify/functions --no-build`. The functions directory is also specified in netlify.toml. On this Windows host set `NODE_USE_SYSTEM_CA=1`. No browser credential or API secret is needed; the public API only supports incrementing by one with a load UUID and reading the count.
 
 Sources: [Netlify Blobs conditional writes](https://docs.netlify.com/build/data-and-storage/netlify-blobs/), [Functions API](https://docs.netlify.com/build/functions/api/), and [SDK conditional-write issue](https://github.com/netlify/primitives/issues/741).
-
