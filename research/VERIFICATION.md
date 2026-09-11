@@ -88,3 +88,7 @@ Published to https://puddle-post.netlify.app/ with deploy ID 6aa27bd985b0cd7a6d5
 
 Changed the shared player scale from 0.8 to 0.9: mouse and umbrella now measure 90% of their original dimensions, with matching collision bounds and clearances. All 14 model tests passed, including the tight-gap clearance test and 40 seeded routes. Production build passed; all 14 deployed files returned HTTP 200 and matched local SHA-256 hashes.
 
+
+## Tighter gaps and faster start — September 11, 2026
+
+Reduced all 10/25-point gap heights and their variation by 20%, including the first three homes; reduced 50-point gaps and variation by 10%. Increased initial speed from 2.55 to 3.06. Compared 3,200 generated gates against the previous committed model: all exact requested ratios passed, with rewards and vertical centers preserved. All 14 gameplay tests passed, including the unchanged pilot across 40 seeded routes. Updated the speed-easing assertion to use relative remaining acceleration (under 2% after one second), so it scales with initial speed. Production build passed with the existing bundle-size advisory. GitHub push is intended to trigger the user's connected Vercel deployment; this change does not redeploy the older Netlify instance.

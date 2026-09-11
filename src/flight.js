@@ -1,10 +1,10 @@
 export const STEP = 1 / 120;
-export const BASE_SPEED = 2.55;
+export const BASE_SPEED = 3.06;
 export const PLAYER_SCALE = .9;
 export const DELIVERY_TIERS = [
-  { name: 'Wide gap', gap: 4.9, points: 10, color: 0xb8d3ef },
-  { name: 'Medium gap', gap: 3.95, points: 25, color: 0xffd19c },
-  { name: 'Tight gap', gap: 3.15, points: 50, color: 0xefaccf },
+  { name: 'Wide gap', gap: 3.92, variation: .144, points: 10, color: 0xb8d3ef },
+  { name: 'Medium gap', gap: 3.16, variation: .144, points: 25, color: 0xffd19c },
+  { name: 'Tight gap', gap: 2.835, variation: .162, points: 50, color: 0xefaccf },
 ];
 export const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 export function seeded(seed = 1) { return () => { seed |= 0; seed = seed + 0x6d2b79f5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t ^= t + Math.imul(t ^ t >>> 7, 61 | t); return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
@@ -30,7 +30,7 @@ export class Flight {
     }
     this.lastTier = tier;
     const center = id === 0 ? 0 : clamp(lastCenter + (this.random() - .5) * (id < 3 ? .6 : 1.9), -.6, 1.15);
-    const gap = DELIVERY_TIERS[tier].gap + (id < 3 ? 0 : (this.random() - .5) * .18);
+    const gap = DELIVERY_TIERS[tier].gap + (id < 3 ? 0 : (this.random() - .5) * DELIVERY_TIERS[tier].variation);
     const mailY = center - .55 + (id < 3 ? 0 : (this.random() - .5) * (tier === 2 ? .12 : .3));
     return { id, x, previousX: x, center, gap, mailY, tier, reward: DELIVERY_TIERS[tier].points, passed: false, delivered: false, missed: false };
   }

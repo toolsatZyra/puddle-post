@@ -41,9 +41,9 @@ test('the first three homes are gentle, followed by visibly different bounded ga
   for(let seed=0;seed<40;seed++) {
     const m=new Flight(seed); const gates=[...m.gates];
     for(let i=6;i<80;i++) gates.push(m.makeGate(i*5.8,gates.at(-1).center));
-    assert.deepEqual(gates.slice(0,3).map(g=>g.gap),[4.9,4.9,4.9]);
+    assert.deepEqual(gates.slice(0,3).map(g=>g.gap),[3.92,3.92,3.92]);
     assert.equal(gates[3].tier,1);
-    for(let i=3;i<gates.length;i++) { const g=gates[i]; assert.notEqual(g.tier,gates[i-1].tier); assert.ok(Math.abs(g.gap-gates[i-1].gap)>.5); assert.ok(g.gap>=3.06 && g.gap<=4.99); assert.equal(g.reward,DELIVERY_TIERS[g.tier].points); }
+    for(let i=3;i<gates.length;i++) { const g=gates[i]; assert.notEqual(g.tier,gates[i-1].tier); assert.ok(Math.abs(g.gap-gates[i-1].gap)>.17); assert.ok(g.gap>=2.754 && g.gap<=3.992); assert.equal(g.reward,DELIVERY_TIERS[g.tier].points); }
     for(let i=3;i+2<gates.length;i+=3) assert.equal(new Set(gates.slice(i,i+3).map(g=>g.tier)).size,3);
   }
 });
@@ -75,14 +75,14 @@ test('passing homes without delivering does not accelerate; level changes ease i
   const m=new Flight();m.passed=100;m.step(STEP);assert.equal(m.speed,BASE_SPEED);
   m.delivered=10;m.step(STEP);assert.ok(m.speed>BASE_SPEED&&m.speed<m.targetSpeed);
   for(let i=0;i<120;i++){m.y=0;m.vy=0;m.gates=[];m.step(STEP);}
-  assert.ok(Math.abs(m.speed-m.targetSpeed)<.008);
+  assert.ok(Math.abs(m.speed-m.targetSpeed)/(m.targetSpeed-BASE_SPEED)<.02);
 });
 test('collision cannot award a delivery or points on the same step', () => {
   const m=new Flight();const g=m.gates[0];g.x=m.x;g.mailY=2;m.y=2;
   const events=m.step(STEP);assert.deepEqual(events.map(e=>e.type),['hit']);assert.equal(m.points,0);assert.equal(m.delivered,0);
 });
 test('smaller umbrella clears a tight passage at the newly safe height, but still collides above it', () => {
-  const m=new Flight();const g=m.gates[0];g.x=m.x;g.center=0;g.gap=3.15;
-  m.y=.4;m.vy=0;m.step(STEP);assert.equal(m.alive,true);
-  m.y=.6;m.vy=0;assert.ok(m.step(STEP).some(e=>e.type==='hit'));
+  const m=new Flight();const g=m.gates[0];g.x=m.x;g.center=0;g.gap=DELIVERY_TIERS[2].gap;
+  m.y=.2;m.vy=0;m.step(STEP);assert.equal(m.alive,true);
+  m.y=.4;m.vy=0;assert.ok(m.step(STEP).some(e=>e.type==='hit'));
 });
