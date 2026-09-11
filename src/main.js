@@ -23,6 +23,7 @@ function chooseMode(next) {
   $('best').textContent=String(best).padStart(2,'0');
 }
 let testPilot = false;
+let recoveryCheck = 0;
 try { const saved = JSON.parse(localStorage.getItem('puddle-post.records') || '{}'); best = Math.max(0, Math.floor(Number(saved.points) || 0)); bestLetters = Math.max(0, Math.floor(Number(saved.letters) || 0)); bestHomes = Math.max(0, Math.floor(Number(saved.homes) || 0)); } catch {}
 $('best').textContent = String(best).padStart(2, '0');
 function setState(next) {
@@ -43,7 +44,7 @@ function hud() {
 function toast(message) { $('toast').textContent = message; $('toast').classList.add('visible'); toastTime = 3; }
 function start() {
   if (!village || state === 'loading') return;
-  testPilot=false;village.gates.forEach(g=>{g.id=-1;g.deliveryAge=-1;});
+  testPilot=false;recoveryCheck=0;village.gates.forEach(g=>{g.id=-1;g.deliveryAge=-1;});
   clearSteering(); model.seed = mode==='free'?crypto.getRandomValues(new Uint32Array(1))[0]:47 + run++ * 17; model.reset(-village.worldW * .24); model.bound=village.worldW/2-.65; setState('playing'); accumulator = 0; previous = performance.now(); deathAge = 0; hud();
   $('guide').classList.add('visible'); $('toast').classList.remove('visible'); $('toast').textContent=''; toastTime=0; popupAnimation?.cancel(); $('delivery-pop').style.opacity = '0';
   sound.resume(); flap(); $('world').focus({ preventScroll: true });
@@ -96,7 +97,8 @@ try {
     const panel = document.createElement('div'); panel.id = 'verification-controls'; panel.style.cssText = 'position:fixed;bottom:8px;right:8px;z-index:25;background:#fff5db;padding:8px;border-radius:8px;font-size:11px;display:flex;gap:8px';
     const check = document.createElement('button'); check.textContent = 'Run 22-delivery flight check'; check.onclick = () => { start(); testPilot = true; };
     const stop = document.createElement('button'); stop.textContent = 'Release controls'; stop.onclick = () => testPilot = false;
-    panel.append(check,stop); document.body.appendChild(panel);
+    const recovery = document.createElement('button'); recovery.textContent='Check falling recovery'; recovery.onclick=()=>{chooseMode('free');start();model.y=-2.8;model.previousY=-2.8;model.vy=-3.6;model.flapCooldown=0;recoveryCheck=1;};
+    panel.append(check,stop,recovery); document.body.appendChild(panel);
   }
   const metricsEl = document.createElement('output'); metricsEl.id = 'dev-metrics'; metricsEl.hidden = true; document.body.appendChild(metricsEl);
   let metricTime = 0;
@@ -107,6 +109,7 @@ try {
     if (state === 'playing') {
       accumulator += dt;
       while (accumulator >= STEP && state === 'playing') {
+        if(import.meta.env.DEV&&recoveryCheck){if(recoveryCheck===1&&model.time>=.12){flap();recoveryCheck=2;}if(recoveryCheck===2&&model.time>=.6){recoveryCheck=0;pause();break;}}
         if (testPilot) {
           const next = model.gates.filter(g => g.x > model.x - .95).sort((a,b) => a.x-b.x)[0];
           if (model.y < (next?.mailY ?? 0) - .32 && model.vy < .2) flap();

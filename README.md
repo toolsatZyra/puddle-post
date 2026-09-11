@@ -28,6 +28,8 @@ Open http://127.0.0.1:4179/. The `dist/` folder can be deployed to any static ho
 
 Choose **Classic route** for the original gap game or **Free flight** for open skies and optional deliveries. Free Flight uses Left/Right or A/D to accelerate, coast, brake, and reverse. Space/Up/W adds lift; hold X or the mobile Lift control for repeated lift. Avoid the moving violet storm sparks, rooftops, and boundaries. Letters remain collectible after you pass them until they leave the screen, so you can double back. Low village letters earn 10 points, wandering letters 25, and high express letters 50. Levels and streak bonuses still apply; each mode keeps a separate personal best. Free Flight starts with slower world scrolling to leave room for steering, and uses its own momentum-based lift model. Each new Free Flight run gets a fresh random seed.
 
+Free Flight recovery tuning: a tap during a fall immediately restores upward velocity of at least 2.9 world units/second. Gravity is 4.4 units/second² and falling speed is capped at 3.6 units/second, giving more time to recover. Repeated taps retain a 0.12-second cooldown and a bounded maximum lift speed. These values apply only to Free Flight.
+
 The following gap rules and single-button controls describe Classic Route:
 
 - Tap/click the scene, or press **Space**, **Up**, or **W** to lift. Release and gravity gently brings the mouse down. Use individual, steady taps.

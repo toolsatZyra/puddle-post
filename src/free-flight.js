@@ -11,10 +11,11 @@ export class FreeFlight extends Flight {
     if(id>0){const baseY=clamp(mailY+(id%2?1.65:-1.65),-1.8,2.6);this.hazards.push({id,x:x+1.9,previousX:x+1.9,y:baseY,previousY:baseY,baseY,phase:this.random()*6.28,rate:.75+this.random()*.5,amplitude:.35+this.random()*.3,r:.28});}
     return{id,x,previousX:x,center:0,gap:6.5,mailY,tier,reward:[10,25,50][tier],passed:false,delivered:false,missed:false};
   }
-  flap(){if(this.alive&&this.flapCooldown<=0){this.vy=Math.min(4.3,this.vy+2.45);this.flapCooldown=.14;}}
+  // A rescue tap always produces lift, even at terminal falling speed.
+  flap(){if(this.alive&&this.flapCooldown<=0){this.vy=Math.min(4.6,Math.max(2.9,this.vy+3.6));this.flapCooldown=.12;}}
   step(dt,axis=0,lift=false){
     if(!this.alive)return[];const events=[];this.time+=dt;this.previousX=this.x;this.previousY=this.y;this.flapCooldown=Math.max(0,this.flapCooldown-dt);if(lift)this.flap();
-    this.vx=clamp(this.vx+clamp(axis,-1,1)*8*dt,-4.2,4.2)*Math.exp(-.5*dt);this.vy=Math.max(-5,this.vy-5.6*dt);this.x+=this.vx*dt;this.y+=this.vy*dt;
+    this.vx=clamp(this.vx+clamp(axis,-1,1)*8*dt,-4.2,4.2)*Math.exp(-.5*dt);this.vy=Math.max(-3.6,this.vy-4.4*dt);this.x+=this.vx*dt;this.y+=this.vy*dt;
     if(this.x< -this.bound){this.x=-this.bound;this.vx=Math.max(0,this.vx);}if(this.x>this.bound){this.x=this.bound;this.vx=Math.min(0,this.vx);}
     this.speed+=(this.targetSpeed-this.speed)*(1-Math.exp(-dt*4));
     for(const g of this.gates){g.previousX=g.x;g.x-=this.speed*dt;}
