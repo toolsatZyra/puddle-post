@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {FreeFlight} from '../src/free-flight.js';
+import {STEP} from '../src/flight.js';
+test('free flight accelerates, drifts and brakes before reversing',()=>{const m=new FreeFlight(4);m.hazards=[];m.vx=3;m.step(STEP,-1);assert.ok(m.vx>0&&m.vx<3);const vx=m.vx;m.step(STEP);assert.ok(m.vx>vx*.99);for(let i=0;i<90;i++){m.y=0;m.vy=0;m.step(STEP,-1);}assert.ok(m.vx<0);});
+test('free-flight flaps add momentum with a cooldown and a speed limit',()=>{const m=new FreeFlight(3);m.vy=-1;m.flap();assert.ok(Math.abs(m.vy-1.45)<1e-12);m.flap();assert.ok(Math.abs(m.vy-1.45)<1e-12);m.flapCooldown=0;m.vy=4;m.flap();assert.equal(m.vy,4.3);});
+test('passing a letter keeps it collectible when reversing to return',()=>{const m=new FreeFlight(1);m.hazards=[];const g=m.gates[0];g.x=m.x-1.1;m.y=g.mailY+1.5;m.vy=0;m.step(STEP);assert.ok(g.passed);assert.equal(g.missed,false);m.x=g.x+.35;m.y=g.mailY;m.vy=0;assert.ok(m.step(STEP).some(e=>e.type==='delivery'));assert.equal(m.delivered,1);m.step(STEP);assert.equal(m.delivered,1);});
+test('off-screen missed deliveries reset streak but do not end free flight',()=>{const m=new FreeFlight(1);m.hazards=[];m.streak=4;m.gates[0].x=-m.bound-2;m.step(STEP);assert.equal(m.streak,0);assert.ok(m.alive);});
+test('storm collision uses the umbrella height and happens before rewards',()=>{const m=new FreeFlight(1);m.hazards=[{x:m.x,y:m.y+.9,baseY:m.y+.9,phase:0,rate:1,amplitude:0,r:.28}];const g=m.gates[0];g.x=m.x;g.mailY=m.y;assert.deepEqual(m.step(STEP).map(e=>e.type),['hit']);assert.equal(m.points,0);});
+test('free flight has moving storms and different optional letter heights',()=>{const m=new FreeFlight(8);assert.ok(new Set(m.gates.map(g=>g.mailY.toFixed(1))).size>2);const h=m.hazards[0];const before=h.y;m.step(STEP);assert.notEqual(h.y,before);});
+test('free-flight reset clears movement and progress and reproduces the same seed',()=>{const m=new FreeFlight(99);const initial=JSON.stringify(m.gates);m.vx=3;m.points=50;m.reset(-4);assert.equal(m.vx,0);assert.equal(m.points,0);assert.equal(JSON.stringify(m.gates),initial);});
+test('recycling keeps active homes and storms bounded on long journeys',()=>{const m=new FreeFlight(31);for(let i=0;i<30000;i++){m.y=0;m.vy=0;for(const h of m.hazards){h.baseY=2.5;h.amplitude=0;}m.step(STEP);}assert.ok(m.alive);assert.equal(m.gates.length,6);assert.ok(m.hazards.length<=8);});

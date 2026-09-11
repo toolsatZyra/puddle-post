@@ -205,6 +205,14 @@ export class Village {
     this.mouse = makeMouse(); this.scene.add(this.mouse.root);
     const ground = mesh(this.scene, new T.PlaneGeometry(200, 35), material(0x817b98, .65), 0, -4.15, -5); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true;
     this.mouseShadow = contact(this.scene, 0, -4.11, 1, 2 * PLAYER_SCALE, 1.3 * PLAYER_SCALE);
+    this.storms=Array.from({length:14},()=>{
+      const group=new T.Group();this.scene.add(group);group.visible=false;
+      const core=material(0x9a81d6,.28);core.emissive=new T.Color(0x4c2b86);core.emissiveIntensity=.6;
+      mesh(group,sphere,core,0,0,0,.17,.17,.17);
+      for(let i=0;i<8;i++){const a=i*Math.PI/4;const spike=mesh(group,new T.ConeGeometry(.065,.29,12),material(0xe9c9ff,.3),Math.cos(a)*.22,Math.sin(a)*.22,0);spike.rotation.z=a-Math.PI/2;}
+      const ring=mesh(group,new T.TorusGeometry(.43,.008,4,36),new T.MeshBasicMaterial({color:0xd4b1ef,transparent:true,opacity:.45}),0,0,0);ring.rotation.y=.25;
+      return group;
+    });
     this.scenery = [];
     this.buildScenery();
     this.buildEveningSky();
@@ -287,7 +295,7 @@ export class Village {
       const targetX = this.mobile ? -.3 : this.worldW * .12; root.position.set(targetX, this.heroY + Math.sin(t * 1.5) * .12, 1);
       root.scale.setScalar(this.heroScale); body.rotation.z = Math.sin(t * 1.6) * .035;
     } else if (playing || paused) {
-      root.scale.lerp(flightScale, 1 - Math.exp(-8 * timeStep)); root.position.set(model.x, model.previousY + (model.y - model.previousY) * alpha, .3);
+      root.scale.lerp(flightScale, 1 - Math.exp(-8 * timeStep)); root.position.set(model.free?model.previousX+(model.x-model.previousX)*alpha:model.x, model.previousY + (model.y - model.previousY) * alpha, .3);
       body.rotation.z += (clamp(model.vy * .033, -.22, .16) - body.rotation.z) * (1 - Math.exp(-9 * timeStep));
     } else if (this.state === 'dying') { this.deathAge += dt; root.position.y = Math.max(-3.7, root.position.y - dt * (1 + this.deathAge * 4)); body.rotation.z += (.28 - body.rotation.z) * dt * 5; }
     if (!paused) {
@@ -300,12 +308,14 @@ export class Village {
     }
     this.heroHouse.visible = ready;
     this.mouseShadow.position.x = root.position.x; this.mouseShadow.material.opacity = clamp(1 - (root.position.y + 3.7) * .085,.25,.7);
+    this.storms.forEach((view,i)=>{const h=model.hazards?.[i];view.visible=!!(model.free&&!ready&&h);if(view.visible){view.position.set(h.previousX+(h.x-h.previousX)*alpha,h.previousY+(h.y-h.previousY)*alpha,.3);view.rotation.z=t*.45+i;}});
     for (let i = 0; i < this.gates.length; i++) {
       const g = this.gates[i], data = model.gates[i];
       if (ready) { g.root.visible = false; continue; }
       const x = data.previousX + (data.x - data.previousX) * alpha;
       g.root.visible = x > -this.worldW / 2 - 2 && x < this.worldW / 2 + 2; g.root.position.x = x;
-      const low = data.center - data.gap / 2, high = data.center + data.gap / 2;
+      const low = model.free?-3.25:data.center - data.gap / 2, high = data.center + data.gap / 2;
+      g.upper.visible=!model.free;g.stem.visible=!model.free;
       g.lower.position.y = low; g.upper.position.y = high;
       g.wall.position.y = (-5 + low - .3) / 2; g.wall.scale.y = low + 5 - .3;
       g.stem.position.y = (high + 8) / 2; g.stem.scale.y = 8 - high;

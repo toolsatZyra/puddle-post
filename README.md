@@ -26,6 +26,10 @@ Open http://127.0.0.1:4179/. The `dist/` folder can be deployed to any static ho
 
 ## Controls and rules
 
+Choose **Classic route** for the original gap game or **Free flight** for open skies and optional deliveries. Free Flight uses Left/Right or A/D to accelerate, coast, brake, and reverse. Space/Up/W adds lift; hold X or the mobile Lift control for repeated lift. Avoid the moving violet storm sparks, rooftops, and boundaries. Letters remain collectible after you pass them until they leave the screen, so you can double back. Low village letters earn 10 points, wandering letters 25, and high express letters 50. Levels and streak bonuses still apply; each mode keeps a separate personal best. Free Flight starts with slower world scrolling to leave room for steering, and uses its own momentum-based lift model. Each new Free Flight run gets a fresh random seed.
+
+The following gap rules and single-button controls describe Classic Route:
+
 - Tap/click the scene, or press **Space**, **Up**, or **W** to lift. Release and gravity gently brings the mouse down. Use individual, steady taps.
 - Float through the gaps between cottages and hanging planters. Touching an obstacle, the ground, or the top of the playfield ends the route. Rain, decorative plants, envelopes, and mailboxes do not collide.
 - Fly near a glowing envelope to send that letter down to its mailbox. The cottage lights up and a resident waves. Deliveries are automatic; there is no second action to learn.
