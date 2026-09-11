@@ -3,7 +3,7 @@
     "path": "index.html",
     "status": 200,
     "hashMatches": true,
-    "bytes": 5962
+    "bytes": 6090
   },
   {
     "path": "stamp.svg",
@@ -18,16 +18,16 @@
     "bytes": 1081
   },
   {
-    "path": "assets/index-CQsEVG6I.css",
+    "path": "assets/index-CeDZfqoo.css",
     "status": 200,
     "hashMatches": true,
-    "bytes": 16897
+    "bytes": 18076
   },
   {
-    "path": "assets/index-kW9p429e.js",
+    "path": "assets/index-swU81JSY.js",
     "status": 200,
     "hashMatches": true,
-    "bytes": 545405
+    "bytes": 547455
   },
   {
     "path": "fonts/dm-sans-bold.ttf",
