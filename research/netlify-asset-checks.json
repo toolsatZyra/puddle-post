@@ -1,0 +1,86 @@
+[
+  {
+    "path": "index.html",
+    "status": 200,
+    "hashMatches": true,
+    "bytes": 5331
+  },
+  {
+    "path": "stamp.svg",
+    "status": 200,
+    "hashMatches": true,
+    "bytes": 303
+  },
+  {
+    "path": "THREE-LICENSE.txt",
+    "status": 200,
+    "hashMatches": true,
+    "bytes": 1081
+  },
+  {
+    "path": "assets/index-CfDGS6Ta.js",
+    "status": 200,
+    "hashMatches": true,
+    "bytes": 537525
+  },
+  {
+    "path": "assets/index-sxXBQWDi.css",
+    "status": 200,
+    "hashMatches": true,
+    "bytes": 14744
+  },
+  {
+    "path": "fonts/dm-sans-bold.ttf",
+    "status": 200,
+    "hashMatches": true,
+    "bytes": 48200
+  },
+  {
+    "path": "fonts/dm-sans-medium.ttf",
+    "status": 200,
+    "hashMatches": true,
+    "bytes": 48308
+  },
+  {
+    "path": "fonts/DM-Sans-OFL.txt",
+    "status": 200,
+    "hashMatches": true,
+    "bytes": 4482
+  },
+  {
+    "path": "fonts/dm-sans-regular.ttf",
+    "status": 200,
+    "hashMatches": true,
+    "bytes": 48280
+  },
+  {
+    "path": "fonts/dm-sans-semibold.ttf",
+    "status": 200,
+    "hashMatches": true,
+    "bytes": 48280
+  },
+  {
+    "path": "fonts/fraunces-italic.ttf",
+    "status": 200,
+    "hashMatches": true,
+    "bytes": 85200
+  },
+  {
+    "path": "fonts/fraunces-medium.ttf",
+    "status": 200,
+    "hashMatches": true,
+    "bytes": 71692
+  },
+  {
+    "path": "fonts/Fraunces-OFL.txt",
+    "status": 200,
+    "hashMatches": true,
+    "bytes": 4391
+  },
+  {
+    "path": "fonts/fraunces-semibold.ttf",
+    "status": 200,
+    "hashMatches": true,
+    "bytes": 71728
+  }
+]

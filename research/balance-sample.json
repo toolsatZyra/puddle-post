@@ -1,0 +1,198 @@
+{
+  "seed": 47,
+  "alive": true,
+  "deliveries": 22,
+  "points": 645,
+  "level": 3,
+  "time": 46.25833333333135,
+  "levels": [
+    {
+      "level": 2,
+      "delivery": 10,
+      "targetSpeed": 2.9324999999999997
+    },
+    {
+      "level": 3,
+      "delivery": 20,
+      "targetSpeed": 3.372374999999999
+    }
+  ],
+  "deliveryDetails": [
+    {
+      "home": 1,
+      "gap": 4.9,
+      "tier": 0,
+      "base": 10,
+      "bonus": 0,
+      "total": 10
+    },
+    {
+      "home": 2,
+      "gap": 4.9,
+      "tier": 0,
+      "base": 10,
+      "bonus": 0,
+      "total": 20
+    },
+    {
+      "home": 3,
+      "gap": 4.9,
+      "tier": 0,
+      "base": 10,
+      "bonus": 0,
+      "total": 30
+    },
+    {
+      "home": 4,
+      "gap": 3.9781062098685656,
+      "tier": 1,
+      "base": 25,
+      "bonus": 0,
+      "total": 55
+    },
+    {
+      "home": 5,
+      "gap": 4.8148723070649435,
+      "tier": 0,
+      "base": 10,
+      "bonus": 20,
+      "total": 85
+    },
+    {
+      "home": 6,
+      "gap": 3.0739665878098457,
+      "tier": 2,
+      "base": 50,
+      "bonus": 0,
+      "total": 135
+    },
+    {
+      "home": 7,
+      "gap": 4.00349136386998,
+      "tier": 1,
+      "base": 25,
+      "bonus": 0,
+      "total": 160
+    },
+    {
+      "home": 8,
+      "gap": 3.1760262816259637,
+      "tier": 2,
+      "base": 50,
+      "bonus": 0,
+      "total": 210
+    },
+    {
+      "home": 9,
+      "gap": 4.909526414163411,
+      "tier": 0,
+      "base": 10,
+      "bonus": 0,
+      "total": 220
+    },
+    {
+      "home": 10,
+      "gap": 3.863650846723467,
+      "tier": 1,
+      "base": 25,
+      "bonus": 20,
+      "total": 265
+    },
+    {
+      "home": 11,
+      "gap": 4.850357718635351,
+      "tier": 0,
+      "base": 10,
+      "bonus": 0,
+      "total": 275
+    },
+    {
+      "home": 12,
+      "gap": 3.085536729362793,
+      "tier": 2,
+      "base": 50,
+      "bonus": 0,
+      "total": 325
+    },
+    {
+      "home": 13,
+      "gap": 3.917927044942044,
+      "tier": 1,
+      "base": 25,
+      "bonus": 0,
+      "total": 350
+    },
+    {
+      "home": 14,
+      "gap": 3.1535909001063556,
+      "tier": 2,
+      "base": 50,
+      "bonus": 0,
+      "total": 400
+    },
+    {
+      "home": 15,
+      "gap": 4.846080176625401,
+      "tier": 0,
+      "base": 10,
+      "bonus": 20,
+      "total": 430
+    },
+    {
+      "home": 16,
+      "gap": 3.118316058497876,
+      "tier": 2,
+      "base": 50,
+      "bonus": 0,
+      "total": 480
+    },
+    {
+      "home": 17,
+      "gap": 4.926155053139665,
+      "tier": 0,
+      "base": 10,
+      "bonus": 0,
+      "total": 490
+    },
+    {
+      "home": 18,
+      "gap": 3.951832244177349,
+      "tier": 1,
+      "base": 25,
+      "bonus": 0,
+      "total": 515
+    },
+    {
+      "home": 19,
+      "gap": 4.8483930990193045,
+      "tier": 0,
+      "base": 10,
+      "bonus": 0,
+      "total": 525
+    },
+    {
+      "home": 20,
+      "gap": 3.86613724781666,
+      "tier": 1,
+      "base": 25,
+      "bonus": 20,
+      "total": 570
+    },
+    {
+      "home": 21,
+      "gap": 3.087723572803661,
+      "tier": 2,
+      "base": 50,
+      "bonus": 0,
+      "total": 620
+    },
+    {
+      "home": 22,
+      "gap": 3.9204194441670555,
+      "tier": 1,
+      "base": 25,
+      "bonus": 0,
+      "total": 645
+    }
+  ]
+}

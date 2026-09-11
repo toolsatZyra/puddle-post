@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <meta name="theme-color" content="#55567d"/>
+  <meta name="description" content="A little mouse. A big umbrella. A village waiting for its post. A beautiful one-button delivery game."/>
+  <link rel="icon" type="image/svg+xml" href="/stamp.svg"/>
+  <title>Puddle Post — A little delivery of joy</title>
+</head>
+<body data-state="loading">
+  <canvas id="world" tabindex="0" aria-label="Puddle Post game. Tap or press Space to lift the mouse. Float through leafy gaps and close to glowing envelopes to deliver letters."></canvas>
+  <div class="atmosphere" aria-hidden="true"></div>
+  <header>
+    <a class="brand" href="./" aria-label="Puddle Post home"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M5 21a15 15 0 0 1 30 0c-3-3-6-3-9 0-4-3-8-3-12 0-3-3-6-3-9 0Z"/><path d="M20 6v25c0 6-7 6-7 1"/></svg><span>PUDDLE POST<small>THE LITTLE VILLAGE POSTAL SERVICE</small></span></a>
+    <div class="utilities"><div class="record"><span>BEST SCORE</span><b id="best">00</b></div><button id="pause" class="icon" aria-label="Pause game"><svg viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></svg></button><button id="sound" class="icon" aria-label="Enable sound" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="m11 5-6 4H2v6h3l6 4Z"/><path class="sound-on" d="M15 8c3 2 3 6 0 8m3-11c5 4 5 10 0 14"/><path class="sound-off" d="m16 9 5 6m0-6-5 6"/></svg></button></div>
+  </header>
+  <section id="intro" aria-labelledby="title">
+    <div class="intro-copy"><p class="eyebrow"><span></span> ONE LAST ROUND BEFORE THE STARS.</p><h1 id="title">Puddle<br/><em>Post.</em></h1><p class="description">A little mouse. A big umbrella.<br/>A village waiting for its post.</p><button id="start" class="primary" disabled><span id="start-label">Opening the village…</span><svg viewBox="0 0 24 24"><path d="M3 12h18m-7-7 7 7-7 7"/></svg></button><p class="control-hint"><kbd>SPACE</kbd> or tap to float<span class="reward-hint">Tighter gaps. Bigger rewards.</span></p></div>
+    <div class="postmark" aria-hidden="true"><span>HANDLE WITH</span><svg viewBox="0 0 32 28"><path d="M16 25 4 14C-5 4 9-5 16 5c7-10 21-1 12 9Z"/></svg><span>A LITTLE CARE</span></div>
+    <div class="intro-bottom"><span>01 — WILLOW LANE</span><p>Somebody’s day is about to get a little brighter.</p><span class="weather"><i></i> BLUE HOUR · SOFT DRIZZLE</span></div>
+  </section>
+  <section id="hud" aria-label="Current route"><div class="route-name"><strong id="level">LEVEL 1</strong><span id="neighborhood">WILLOW LANE</span><div class="route-dots" id="route-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><small id="level-progress">0/10 deliveries to level 2</small><small id="speed">100% SPEED</small></div><div class="score"><b id="points">0</b><span>POINTS</span><small><span id="delivered">0</span> letters · <span id="passed">0</span> homes</small></div><div id="next-delivery" data-tier="0"><small>NEXT DELIVERY</small><b id="next-reward">Wide gap · 10 pts</b></div></section>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <p id="guide">Tap gently to lift. Float near an envelope to deliver.</p>
+  <div id="delivery-pop" aria-hidden="true">A little joy, delivered <span>+1</span></div>
+  <section id="pause-panel" class="overlay" role="dialog" aria-modal="true" hidden aria-labelledby="pause-title"><div class="paper"><p class="eyebrow">THE POST CAN WAIT A MOMENT</p><h2 id="pause-title">A little breather.</h2><p>Your umbrella is right where you left it.</p><button id="resume" class="primary">Keep floating <span>→</span></button><button id="pause-home" class="text-button">Back to the village</button></div></section>
+  <section id="result-panel" class="overlay" role="dialog" aria-modal="true" hidden aria-labelledby="result-title"><div class="paper"><div class="envelope-seal" aria-hidden="true">♡</div><p class="eyebrow" id="result-eyebrow">THANK YOU, LITTLE POSTMOUSE</p><h2 id="result-title">A little rain.<br/>A lot of heart.</h2><p id="result-message">The village will be here for your next round.</p><div class="stats"><div><b id="result-points">0</b><span>POINTS</span></div><div><b id="result-letters">0</b><span>LETTERS</span></div><div><b id="result-level">1</b><span>LEVEL</span></div></div><p class="result-distance"><span id="result-homes">0</span> homes passed · 5 in a row earns +20 pts</p><p id="new-best"></p><button id="retry" class="primary">One more delivery <span>↗</span></button><button id="home" class="text-button">Back to the village</button><p class="retry-hint">Space or tap the button to try again</p></div></section>
+  <section id="error" class="overlay" hidden><div class="paper"><h2>A moment indoors.</h2><p id="error-message">The village needs WebGL to open. Please try a browser with hardware acceleration enabled.</p><button class="primary" onclick="location.reload()">Try again</button></div></section>
+  <noscript><div class="no-js">Please enable JavaScript to open Puddle Post.</div></noscript>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
