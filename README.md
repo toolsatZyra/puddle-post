@@ -71,3 +71,8 @@ See [research/VERIFICATION.md](research/VERIFICATION.md) for observed browser an
 ## Remaining limits
 
 Requires WebGL and a modern browser. Performance was measured on this Windows computer in the Codex Chromium browser; phone-sized viewports were tested on this computer, not on physical Android/iPhone hardware. Audio synthesis is implemented but was not audibly reviewed, to respect silent development. The scene uses stylized glossy puddles and soft lighting, not expensive real-time reflections. No service-worker offline installation, touch-hardware test, or independent player study has been performed.
+
+## Shared home-screen counter
+
+The top badge reads **Number of games played** and counts home-page loads from a starting offset of 179. Each successful reload increments a persistent shared total; open home screens refresh every five seconds. A Netlify Function and Blobs store power the counter, including when this frontend runs on Vercel. See [research/COUNTER.md](research/COUNTER.md) for semantics, development setup, tests, and deployment instructions. There are now 31 tests. Gameplay remains available if the counter service is unavailable.
+

@@ -1,0 +1,5 @@
+
+/* Shared home-screen total. */
+.game-counter{position:fixed;z-index:9;top:max(28px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:9px;width:max-content;max-width:calc(100% - 40px);padding:10px 14px;border:1px solid #fff2;border-radius:30px;background:#24243d55;backdrop-filter:blur(12px);color:#fff2df;font-size:11px;letter-spacing:.025em;pointer-events:auto;line-height:1.2}
+.game-counter strong{font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;margin-left:3px}.counter-dot{width:5px;height:5px;flex:none;border-radius:50%;background:#e8c4a6}.game-counter[data-connection=live] .counter-dot{box-shadow:0 0 8px #ffce9890}.game-counter[data-connection=offline] .counter-dot{opacity:.35}
+@media(max-width:950px){.game-counter{top:max(70px,calc(env(safe-area-inset-top) + 58px));padding:9px 12px;font-size:10px}.game-counter strong{font-size:13px}}

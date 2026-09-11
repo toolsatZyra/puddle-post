@@ -1,4 +1,6 @@
 import './style.css';
+import './game-counter.css';
+import './game-counter.js';
 import { Flight, STEP, DELIVERY_TIERS, BASE_SPEED } from './flight.js';
 import { FreeFlight, FREE_LABELS } from './free-flight.js';
 import { Village } from './scene.js';
@@ -75,8 +77,9 @@ $('start').onclick = start; $('retry').onclick = start; $('pause').onclick = pau
 $('classic-mode').onclick=()=>chooseMode('classic');$('free-mode').onclick=()=>chooseMode('free');
 for(const b of document.querySelectorAll('#free-controls button')){b.addEventListener('pointerdown',e=>{e.preventDefault();b.setPointerCapture(e.pointerId);touchInput.set(e.pointerId,b.dataset.action);});for(const action of ['pointerup','pointercancel','lostpointercapture'])b.addEventListener(action,e=>touchInput.delete(e.pointerId));}
 $('sound').onclick = () => { const enabled = sound.toggle(); document.body.dataset.sound = enabled ? 'on' : 'off'; $('sound').setAttribute('aria-label', enabled ? 'Mute sound' : 'Enable sound'); $('sound').setAttribute('aria-pressed', String(enabled)); };
-document.addEventListener('pointerdown', e => { if (e.target.closest('button,a,.overlay') || e.button !== 0 || !e.isPrimary) return; e.preventDefault(); act(); });
+document.addEventListener('pointerdown', e => { if (e.target.closest('button,a,.overlay,.game-counter') || e.button !== 0 || !e.isPrimary) return; e.preventDefault(); act(); });
 document.addEventListener('keydown', e => {
+  if (e.target.closest('.game-counter')) return;
   if(mode==='free'&&['ArrowLeft','ArrowRight','KeyA','KeyD','KeyX'].includes(e.code)){e.preventDefault();if(state==='playing')steering.add(e.code);}
   if (e.code === 'Tab' && (state === 'paused' || state === 'over')) {
     const buttons = [...$(state === 'paused' ? 'pause-panel' : 'result-panel').querySelectorAll('button')];
