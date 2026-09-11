@@ -1,0 +1,9 @@
+.home-stats{position:fixed;z-index:9;top:max(24px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);text-align:center;width:max-content;max-width:calc(100% - 32px);pointer-events:auto;color:#fff1d9}
+.global-record>span{display:block;font-size:9px;font-weight:600;letter-spacing:.2em;line-height:1.4}
+.global-record>strong{display:block;font-size:54px;font-weight:600;line-height:1.05;letter-spacing:-.04em;font-variant-numeric:tabular-nums;text-shadow:0 2px 22px #ffd2a329}
+.home-stats .game-counter{position:static;transform:none;margin:8px auto 0;padding:7px 12px;font-size:10px;max-width:100%;background:#24243d40}
+.home-stats .game-counter strong{font-size:12px}
+@media(max-width:950px){.home-stats{top:max(68px,calc(env(safe-area-inset-top) + 54px))}.global-record>strong{font-size:42px}.global-record>span{font-size:8px}.home-stats .game-counter{font-size:9px;margin-top:5px;padding:6px 10px}.home-stats .game-counter strong{font-size:11px}}
+@media(max-height:570px) and (min-width:701px){.home-stats{top:18px}.global-record>strong{font-size:38px}.home-stats .game-counter{font-size:9px}}
+
+@media(max-width:700px){.intro-copy{top:170px}.intro-copy .eyebrow{display:none}}

@@ -75,3 +75,7 @@ Requires WebGL and a modern browser. Performance was measured on this Windows co
 ## Shared home-screen counter
 
 The top badge reads **Number of games played** and counts home-page loads from a starting offset of 179. Each successful reload increments a persistent shared total; open home screens refresh every five seconds. A Netlify Function and Blobs store power the counter, including when this frontend runs on Vercel. See [research/COUNTER.md](research/COUNTER.md) for semantics, development setup, tests, and deployment instructions. There are now 31 tests. Gameplay remains available if the counter service is unavailable.
+
+## Shared high score
+
+The home screen prominently displays the selected mode's shared record: Classic Route starts at 1,650 and Free Flight at 1,155, supplied by the user. Completed runs are replayed on the server before a higher score is saved. Personal best stays separate. Vercel and Netlify share the same score service. See [research/HIGH_SCORE.md](research/HIGH_SCORE.md) for validation, verification, and limits. All 37 tests pass.

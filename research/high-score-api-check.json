@@ -1,0 +1,23 @@
+{
+  "endpoint": "https://6aa3d5cd565e858014857bb3--puddle-post.netlify.app/api/high-score",
+  "before": {
+    "classic": 1650,
+    "free": 1155
+  },
+  "runs": [
+    {
+      "mode": "classic",
+      "computedScore": 85,
+      "sharedHighScore": 1650,
+      "commands": 26
+    },
+    {
+      "mode": "free",
+      "computedScore": 20,
+      "sharedHighScore": 1155,
+      "commands": 13
+    }
+  ],
+  "arbitraryScoreRejected": true,
+  "passed": true
+}

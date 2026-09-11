@@ -1,6 +1,8 @@
 import './style.css';
 import './game-counter.css';
+import './high-score.css';
 import './game-counter.js';
+import { selectScoreMode, beginScoreRun, resizeScoreRun, completeScoreRun, refreshHighScore } from './high-score.js';
 import { Flight, STEP, DELIVERY_TIERS, BASE_SPEED } from './flight.js';
 import { FreeFlight, FREE_LABELS } from './free-flight.js';
 import { Village } from './scene.js';
@@ -16,6 +18,7 @@ function clearSteering() { steering.clear(); touchInput.clear(); }
 function chooseMode(next) {
   testPilot=false;
   mode=next;model=next==='free'?new FreeFlight(47):new Flight(47);document.body.dataset.mode=next;
+  selectScoreMode(next);
   model.reset(-village.worldW*.24);model.bound=village.worldW/2-.65;
   $('classic-mode').setAttribute('aria-pressed',String(next==='classic'));$('free-mode').setAttribute('aria-pressed',String(next==='free'));
   $('control-hint').innerHTML=next==='free'?'<kbd>←</kbd> <kbd>→</kbd> steer · <kbd>SPACE</kbd> lift':'<kbd>SPACE</kbd> or tap to float';
@@ -49,12 +52,13 @@ function start() {
   testPilot=false;recoveryCheck=0;village.gates.forEach(g=>{g.id=-1;g.deliveryAge=-1;});
   clearSteering(); model.seed = mode==='free'?crypto.getRandomValues(new Uint32Array(1))[0]:47 + run++ * 17; model.reset(-village.worldW * .24); model.bound=village.worldW/2-.65; setState('playing'); accumulator = 0; previous = performance.now(); deathAge = 0; hud();
   $('guide').classList.add('visible'); $('toast').classList.remove('visible'); $('toast').textContent=''; toastTime=0; popupAnimation?.cancel(); $('delivery-pop').style.opacity = '0';
+  beginScoreRun(model, mode, village.worldW);
   sound.resume(); flap(); $('world').focus({ preventScroll: true });
 }
 function flap() { model.flap(); village.flap(); sound.lift(); }
 function pause() { if (state !== 'playing') return; setState('paused'); sound.pause(); $('resume').focus({ preventScroll: true }); }
 function resume() { if (state !== 'paused') return; setState('playing'); sound.resume(); accumulator = 0; previous = performance.now(); $('world').focus({ preventScroll: true }); }
-function home() { setState('ready'); model.reset(-village.worldW * .24); $('start').focus({ preventScroll: true }); $('toast').classList.remove('visible'); popupAnimation?.cancel(); }
+function home() { setState('ready'); model.reset(-village.worldW * .24); refreshHighScore(); $('start').focus({ preventScroll: true }); $('toast').classList.remove('visible'); popupAnimation?.cancel(); }
 function act() { if (state === 'ready' || state === 'over') start(); else if (state === 'playing') flap(); }
 function delivery(event) {
   village.delivered(event.gate.id); sound.chime(); hud();
@@ -65,6 +69,7 @@ function delivery(event) {
   if (event.bonus) toast(`${event.streak} in a row · +20 streak points!`);
 }
 function finish() {
+  completeScoreRun();
   const record = model.points > best; best = Math.max(best, model.points); bestLetters = Math.max(bestLetters, model.delivered); bestHomes = Math.max(bestHomes, model.passed);
   try { localStorage.setItem(mode==='free'?'puddle-post.free-records':'puddle-post.records', JSON.stringify({ version:2, points:best, letters:bestLetters, homes:bestHomes })); } catch {}
   $('best').textContent = String(best).padStart(2, '0'); $('result-points').textContent = model.points; $('result-letters').textContent = model.delivered; $('result-level').textContent = model.level; $('result-homes').textContent=model.passed;
@@ -77,7 +82,7 @@ $('start').onclick = start; $('retry').onclick = start; $('pause').onclick = pau
 $('classic-mode').onclick=()=>chooseMode('classic');$('free-mode').onclick=()=>chooseMode('free');
 for(const b of document.querySelectorAll('#free-controls button')){b.addEventListener('pointerdown',e=>{e.preventDefault();b.setPointerCapture(e.pointerId);touchInput.set(e.pointerId,b.dataset.action);});for(const action of ['pointerup','pointercancel','lostpointercapture'])b.addEventListener(action,e=>touchInput.delete(e.pointerId));}
 $('sound').onclick = () => { const enabled = sound.toggle(); document.body.dataset.sound = enabled ? 'on' : 'off'; $('sound').setAttribute('aria-label', enabled ? 'Mute sound' : 'Enable sound'); $('sound').setAttribute('aria-pressed', String(enabled)); };
-document.addEventListener('pointerdown', e => { if (e.target.closest('button,a,.overlay,.game-counter') || e.button !== 0 || !e.isPrimary) return; e.preventDefault(); act(); });
+document.addEventListener('pointerdown', e => { if (e.target.closest('button,a,.overlay,.home-stats') || e.button !== 0 || !e.isPrimary) return; e.preventDefault(); act(); });
 document.addEventListener('keydown', e => {
   if (e.target.closest('.game-counter')) return;
   if(mode==='free'&&['ArrowLeft','ArrowRight','KeyA','KeyD','KeyX'].includes(e.code)){e.preventDefault();if(state==='playing')steering.add(e.code);}
@@ -92,7 +97,7 @@ document.addEventListener('keydown', e => {
 });
 document.addEventListener('keyup',e=>steering.delete(e.code));
 window.addEventListener('blur', pause); document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); previous = performance.now(); accumulator = 0; });
-window.addEventListener('resize', () => { if (!village) return; pause(); const oldX = model.x; village.resize(); model.x = -village.worldW * .24; model.previousX=model.x;model.bound=village.worldW/2-.65; const dx = model.x - oldX; model.gates.forEach(g => { g.x += dx; g.previousX += dx; }); model.hazards?.forEach(h=>{h.x+=dx;h.previousX+=dx;}); });
+window.addEventListener('resize', () => { if (!village) return; pause(); const oldX = model.x; village.resize(); resizeScoreRun(village.worldW); model.x = -village.worldW * .24; model.previousX=model.x;model.bound=village.worldW/2-.65; const dx = model.x - oldX; model.gates.forEach(g => { g.x += dx; g.previousX += dx; }); model.hazards?.forEach(h=>{h.x+=dx;h.previousX+=dx;}); });
 $('world').addEventListener('webglcontextlost', e => { e.preventDefault(); pause(); $('error-message').textContent = 'The rain interrupted the canvas. Reload the village to take another trip.'; $('error').hidden = false; });
 try {
   village = new Village($('world'), reduced); model.reset(-village.worldW * .24); setState('ready'); $('start').disabled = false; $('start-label').textContent = 'Make someone’s day';
